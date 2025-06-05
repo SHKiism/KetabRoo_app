@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -25,7 +26,7 @@ class StartScreen extends StatelessWidget {
               // تصویر کتاب و آیکن‌ها
               Column(
                 children: [
-                  const Icon(Icons.menu_book, size: 100, color: Colors.black),
+                  SvgPicture.asset('assets/icons/book.svg',width: 150, height: 150,),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +43,7 @@ class StartScreen extends StatelessWidget {
               Column(
                 children: const [
                   Text(
-                    "Start exploring the\nworld of books",
+                    "شروع جستجو \nدر دنیای کتاب ها",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
@@ -51,7 +52,7 @@ class StartScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    "Search and rate books, listen to audiobooks",
+                    "جستجو، نقد و امتیازدهی به کتاب ها",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 14),
                   ),
@@ -71,7 +72,7 @@ class StartScreen extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Log in", style: TextStyle(fontSize: 16, color: Colors.black)),
+                        Text("ورود", style: TextStyle(fontSize: 16, color: Colors.black)),
                         SizedBox(width: 8),
                         Icon(Icons.arrow_forward, color: Colors.black),
                       ],
@@ -89,7 +90,7 @@ class StartScreen extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Sign up", style: TextStyle(fontSize: 16, color: Colors.white)),
+                        Text("ثبت نام", style: TextStyle(fontSize: 16, color: Colors.white)),
                         SizedBox(width: 8),
                         Icon(Icons.arrow_forward, color: Colors.white),
                       ],

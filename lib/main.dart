@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ketab_roo_app/start_screen.dart';
 import 'package:ketab_roo_app/signup_screen.dart';
 import 'package:ketab_roo_app/login_screen.dart';
-// import 'package:ketab_roo_app/home_screen.dart'; // در صورت وجود
+import 'package:ketab_roo_app/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const StartScreen()),
         GetPage(name: '/signup', page: () => const SignUpScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
-        // GetPage(name: '/home', page: () => const HomeScreen()), // در صورت ساختن
+        GetPage(name: '/home', page: () => const HomeScreen()),
       ],
     );
   }

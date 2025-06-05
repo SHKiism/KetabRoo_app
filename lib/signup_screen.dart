@@ -31,19 +31,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.topRight,
                   child: GestureDetector(
                     onTap: () => Get.toNamed('/login'),
-                    child: const Text("Log in", style: TextStyle(fontWeight: FontWeight.w500)),
+                    child: const Text("ورود", style: TextStyle(fontWeight: FontWeight.w500)),
                   ),
                 ),
                 const SizedBox(height: 40),
                 const Text(
-                  "Sign up",
+                  "ثبت نام",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
                 TextField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                    labelText: "E-mail",
+                    labelText: "ایمیل",
                     hintText: "example@gmail.com",
                     suffixIcon: Icon(Icons.check),
                   ),
@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: passwordController,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    labelText: "Password",
+                    labelText: "رمز عبور",
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: confirmController,
                   obscureText: _obscureConfirm,
                   decoration: InputDecoration(
-                    labelText: "Confirm Password",
+                    labelText: "تکرار رمز عبور",
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirm ? Icons.visibility_off : Icons.visibility,
@@ -97,11 +97,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  label: const Text("ثبت نام"),
                   icon: const Icon(Icons.arrow_forward),
-                  label: const Text("Sign up"),
                 ),
                 const SizedBox(height: 24),
-                const Center(child: Text("or sign up using social account")),
+                const Center(child: Text("یا ورود با حساب‌های اجتماعی")),
                 const SizedBox(height: 16),
                 _socialButton("Facebook", Icons.facebook, Colors.grey.shade200),
                 const SizedBox(height: 8),
@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 _socialButton("Apple", Icons.apple, Colors.grey.shade200),
                 const SizedBox(height: 24),
                 const Text(
-                  "By creating an account or signing up you agree to our Terms and Conditions",
+                  "با ورود به حساب، شرایط و قوانین را پذیرفته‌اید.",
                   style: TextStyle(fontSize: 12),
                   textAlign: TextAlign.center,
                 )
