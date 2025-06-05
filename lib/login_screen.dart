@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -70,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // ورود
+                      Get.offAll(() => const HomeScreen()); // یا Navigator...
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -80,22 +82,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  icon: const Icon(Icons.arrow_forward),
                   label: const Text("ورود"),
+                  icon: const Icon(Icons.arrow_back),
                 ),
                 const SizedBox(height: 24),
                 const Center(child: Text("یا ورود با حساب‌های اجتماعی")),
                 const SizedBox(height: 16),
-                _socialButton("Facebook", Icons.facebook, Colors.grey.shade200),
+                _socialButton("ورود با فیسبوک", Icons.facebook, Colors.grey.shade200),
                 const SizedBox(height: 8),
-                _socialButton("Google", Icons.g_mobiledata, Colors.grey.shade200),
+                _socialButton("ورود با گوگل", Icons.g_mobiledata, Colors.grey.shade200),
                 const SizedBox(height: 8),
-                _socialButton("Apple", Icons.apple, Colors.grey.shade200),
+                _socialButton("ورود با اپل", Icons.apple, Colors.grey.shade200),
                 const SizedBox(height: 24),
-                const Text(
-                  "با ورود به حساب، شرایط و قوانین را پذیرفته‌اید.",
-                  style: TextStyle(fontSize: 12),
-                  textAlign: TextAlign.center,
+                const Center(
+                  child: Text(
+                    "با ورود به حساب، شرایط و قوانین را پذیرفته‌اید.",
+                    style: TextStyle(fontSize: 12),
+                    textAlign: TextAlign.center,
+                  ),
                 )
               ],
             ),
@@ -116,6 +120,5 @@ class _LoginScreenState extends State<LoginScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
-    ),
   }
 }

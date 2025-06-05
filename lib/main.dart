@@ -17,6 +17,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: const Locale('fa', 'IR'),
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        );
+      },
+      theme: ThemeData(
+        fontFamily: 'Vazir',
+        primarySwatch: Colors.deepOrange,
+        scaffoldBackgroundColor: Colors.white,
+      ),
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const StartScreen()),

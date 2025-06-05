@@ -42,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 24),
                 TextField(
                   controller: emailController,
+                  textAlign: TextAlign.right,
                   decoration: const InputDecoration(
                     labelText: "ایمیل",
                     hintText: "example@gmail.com",
@@ -52,6 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextField(
                   controller: passwordController,
                   obscureText: _obscurePassword,
+                  textAlign: TextAlign.right,
                   decoration: InputDecoration(
                     labelText: "رمز عبور",
                     suffixIcon: IconButton(
@@ -70,6 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextField(
                   controller: confirmController,
                   obscureText: _obscureConfirm,
+                  textAlign: TextAlign.right,
                   decoration: InputDecoration(
                     labelText: "تکرار رمز عبور",
                     suffixIcon: IconButton(
@@ -98,21 +101,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   label: const Text("ثبت نام"),
-                  icon: const Icon(Icons.arrow_forward),
+                  icon: const Icon(Icons.arrow_back),
                 ),
                 const SizedBox(height: 24),
                 const Center(child: Text("یا ورود با حساب‌های اجتماعی")),
                 const SizedBox(height: 16),
-                _socialButton("Facebook", Icons.facebook, Colors.grey.shade200),
+                _socialButton("ورود با فیسبوک", Icons.facebook, Colors.grey.shade200),
                 const SizedBox(height: 8),
-                _socialButton("Google", Icons.g_mobiledata, Colors.grey.shade200),
+                _socialButton("ورود با گوگل", Icons.g_mobiledata, Colors.grey.shade200),
                 const SizedBox(height: 8),
-                _socialButton("Apple", Icons.apple, Colors.grey.shade200),
+                _socialButton("ورود با اپل", Icons.apple, Colors.grey.shade200),
                 const SizedBox(height: 24),
-                const Text(
-                  "با ورود به حساب، شرایط و قوانین را پذیرفته‌اید.",
-                  style: TextStyle(fontSize: 12),
-                  textAlign: TextAlign.center,
+                const Center(
+                  child: Text(
+                    "با ورود به حساب، شرایط و قوانین را پذیرفته‌اید.",
+                    style: TextStyle(fontSize: 12),
+                    textAlign: TextAlign.center,
+                  ),
                 )
               ],
             ),

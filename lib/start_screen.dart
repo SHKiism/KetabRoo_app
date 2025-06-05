@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -7,7 +7,7 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F0E6), // رنگ زمینه نزدیک به عکس
+      backgroundColor: const Color(0xFFF5F0E6),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -23,27 +23,27 @@ class StartScreen extends StatelessWidget {
                   Icon(Icons.volume_up, size: 24),
                 ],
               ),
-              // تصویر کتاب و آیکن‌ها
+              // تصویر کتاب و امتیاز
               Column(
                 children: [
-                  SvgPicture.asset('assets/icons/book.svg',width: 150, height: 150,),
+                  SvgPicture.asset('assets/icons/book.svg', width: 150, height: 150),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text("7/10", style: TextStyle(fontSize: 16)),
-                      Icon(Icons.favorite, color: Colors.black),
+                      Icon(Icons.favorite_border, color: Colors.black),
                     ],
                   ),
-                  SizedBox (height: 24),
-                  Container(height: 1,color: Colors.black54,)
+                  const SizedBox(height: 24),
+                  Container(height: 1, color: Colors.black54),
                 ],
               ),
-              // متن اصلی
+              // متن معرفی
               Column(
                 children: const [
                   Text(
-                    "شروع جستجو \nدر دنیای کتاب ها",
+                    "شروع جستجو \nدر دنیای کتاب‌ها",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
@@ -52,7 +52,7 @@ class StartScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    "جستجو، نقد و امتیازدهی به کتاب ها",
+                    "جستجو، نقد و امتیازدهی به کتاب‌ها",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 14),
                   ),
@@ -74,7 +74,7 @@ class StartScreen extends StatelessWidget {
                       children: [
                         Text("ورود", style: TextStyle(fontSize: 16, color: Colors.black)),
                         SizedBox(width: 8),
-                        Icon(Icons.arrow_forward, color: Colors.black),
+                        Icon(Icons.arrow_back, color: Colors.black),
                       ],
                     ),
                   ),
@@ -92,7 +92,7 @@ class StartScreen extends StatelessWidget {
                       children: [
                         Text("ثبت نام", style: TextStyle(fontSize: 16, color: Colors.white)),
                         SizedBox(width: 8),
-                        Icon(Icons.arrow_forward, color: Colors.white),
+                        Icon(Icons.arrow_back, color: Colors.white),
                       ],
                     ),
                   ),
