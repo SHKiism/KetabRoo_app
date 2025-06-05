@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // ثبت‌نام
+                    Get.toNamed('/register_info');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

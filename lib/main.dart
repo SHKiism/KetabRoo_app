@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ketab_roo_app/register_info.dart';
 import 'package:ketab_roo_app/start_screen.dart';
 import 'package:ketab_roo_app/signup_screen.dart';
 import 'package:ketab_roo_app/login_screen.dart';
-// import 'package:ketab_roo_app/home_screen.dart'; // در صورت وجود
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const StartScreen()),
         GetPage(name: '/signup', page: () => const SignUpScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
+        GetPage(name: '/register_info', page: () => const RegisterInfo()),
         // GetPage(name: '/home', page: () => const HomeScreen()), // در صورت ساختن
       ],
     );
