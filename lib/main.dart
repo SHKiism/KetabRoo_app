@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ketab_roo_app/profile.dart';
+import 'package:ketab_roo_app/profile_setting.dart';
 import 'package:ketab_roo_app/register_info.dart';
 import 'package:ketab_roo_app/start_screen.dart';
 import 'package:ketab_roo_app/signup_screen.dart';
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => const LoginScreen()),
         GetPage(name: '/register_info', page: () => const RegisterInfo()),
         GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(name: '/profile', page: () => const Profile()),
+        GetPage(name: '/profile_setting', page: () => const ProfileSetting()),
       ],
     );
   }

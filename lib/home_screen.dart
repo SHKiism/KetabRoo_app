@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ketab_roo_app/profile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -150,6 +151,23 @@ class HomeScreen extends StatelessWidget {
           currentIndex: 0,
           onTap: (index) {
             // کنترل ناوبری
+            if (index == 0) {
+              // صفحه خانه - هیچ کاری لازم نیست
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            } else if (index == 1) {
+              // Navigator.push(
+                // context,
+                // MaterialPageRoute(builder: (context) => const SearchScreen()),
+              // );
+            } else if (index == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Profile()),
+              );
+            }
           },
           items: [
             BottomNavigationBarItem(
