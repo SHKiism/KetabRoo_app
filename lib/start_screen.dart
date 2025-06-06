@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:ketab_roo_app/login_screen.dart';
+import 'package:ketab_roo_app/signup_screen.dart';
 import 'home.dart';
 
 class StartScreen extends StatelessWidget {
@@ -69,7 +71,7 @@ class StartScreen extends StatelessWidget {
                       side: const BorderSide(color: Colors.black, width: 2),
                     ),
                     onPressed: () {
-                      Get.offAll(() => const Home());
+                      Get.offAll(() => const LoginScreen());
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +89,7 @@ class StartScreen extends StatelessWidget {
                       minimumSize: const Size(double.infinity, 50),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Get.offAll(() => const SignUpScreen());
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'home.dart';
 import 'home_screen.dart';
 
 class RegisterInfo extends StatefulWidget {
@@ -114,7 +115,7 @@ class _RegisterInfo extends State<RegisterInfo> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.offAll(() => const HomeScreen());
+                      Get.offAll(() => const Home());
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
