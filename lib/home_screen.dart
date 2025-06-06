@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ketab_roo_app/profile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,38 +15,34 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Greeting
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "سلام، کاربر عزیز 👋",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
                 // Search Field
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                    boxShadow: [
+                      BoxShadow(color: Colors.black12, blurRadius: 4),
+                    ],
                   ),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "جستجوی کتاب یا نویسنده...",
                       prefixIcon: const Icon(Icons.search),
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 28),
 
                 // Top 10 this week
-                const Text("📚 ۱۰ کتاب برتر این هفته", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                const Text(
+                  "📚 ۱۰ کتاب برتر این هفته",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 const SizedBox(height: 12),
                 SizedBox(
                   height: 180,
@@ -56,50 +50,73 @@ class HomeScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     separatorBuilder: (_, __) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) => Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            "https://picsum.photos/100/150?random=$index",
-                            width: 100,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          ),
+                    itemBuilder:
+                        (context, index) => Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                "https://picsum.photos/100/150?random=$index",
+                                width: 100,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Colors.brown,
+                              child: Text(
+                                "${index + 1}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 6),
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor: Colors.brown,
-                          child: Text("${index + 1}", style: const TextStyle(color: Colors.white, fontSize: 12)),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
                 const SizedBox(height: 28),
 
                 // Book Categories
-                const Text("📖 موضوعات کتاب", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                const Text(
+                  "📖 موضوعات کتاب",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 const SizedBox(height: 12),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: [
-                    "عاشقانه", "رازآلود", "پلیسی", "تخیلی", "اجتماعی", "طنز", "معنوی", "ترسناک"
-                  ].map((tag) {
-                    return Chip(
-                      label: Text(tag),
-                      backgroundColor: const Color(0xfffdfdfd),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      side: const BorderSide(color: Color(0xffdddddd)),
-                    );
-                  }).toList(),
+                  children:
+                      [
+                        "عاشقانه",
+                        "رازآلود",
+                        "پلیسی",
+                        "تخیلی",
+                        "اجتماعی",
+                        "طنز",
+                        "معنوی",
+                        "ترسناک",
+                      ].map((tag) {
+                        return Chip(
+                          label: Text(tag),
+                          backgroundColor: const Color(0xfffdfdfd),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          side: const BorderSide(color: Color(0xffdddddd)),
+                        );
+                      }).toList(),
                 ),
                 const SizedBox(height: 28),
 
                 // New books
-                const Text("📕 تازه‌ها", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                const Text(
+                  "📕 تازه‌ها",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 const SizedBox(height: 12),
                 GridView.builder(
                   shrinkWrap: true,
@@ -111,78 +128,45 @@ class HomeScreen extends StatelessWidget {
                     mainAxisSpacing: 12,
                     childAspectRatio: 2 / 3,
                   ),
-                  itemBuilder: (context, index) => ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Stack(
-                      children: [
-                        Image.network(
-                          "https://picsum.photos/200/300?random=${index + 30}",
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          left: 0,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 6),
-                            color: Colors.black.withOpacity(0.4),
-                            child: const Center(
-                              child: Text("کتاب جدید", style: TextStyle(color: Colors.white, fontSize: 13)),
+                  itemBuilder:
+                      (context, index) => ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Stack(
+                          children: [
+                            Image.network(
+                              "https://picsum.photos/200/300?random=${index + 30}",
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 6,
+                                ),
+                                color: Colors.black.withOpacity(0.4),
+                                child: const Center(
+                                  child: Text(
+                                    "کتاب جدید",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                 ),
                 const SizedBox(height: 24),
               ],
             ),
           ),
-        ),
-
-        // Bottom Navigation
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.brown[800],
-          unselectedItemColor: Colors.grey,
-          currentIndex: 0,
-          onTap: (index) {
-            // کنترل ناوبری
-            if (index == 0) {
-              // صفحه خانه - هیچ کاری لازم نیست
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
-            } else if (index == 1) {
-              // Navigator.push(
-                // context,
-                // MaterialPageRoute(builder: (context) => const SearchScreen()),
-              // );
-            } else if (index == 2) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Profile()),
-              );
-            }
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("assets/icons/home.svg", width: 24, color: Colors.black),
-              label: "خانه",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("assets/icons/search.svg", width: 24, color: Colors.black),
-              label: "جستجو",
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("assets/icons/profile.svg", width: 24, color: Colors.black),
-              label: "پروفایل",
-            ),
-          ],
         ),
       ),
     );

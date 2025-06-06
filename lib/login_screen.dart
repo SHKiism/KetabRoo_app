@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'home_screen.dart';
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -72,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
                   onPressed: () {
-                      Get.offAll(() => const HomeScreen()); // یا Navigator...
+                      Get.offAll(() => const Home()); // یا Navigator...
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

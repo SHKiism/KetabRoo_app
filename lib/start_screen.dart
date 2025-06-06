@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'home.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -67,7 +69,7 @@ class StartScreen extends StatelessWidget {
                       side: const BorderSide(color: Colors.black, width: 2),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Get.offAll(() => const Home());
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

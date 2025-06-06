@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ketab_roo_app/profile_setting.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -8,35 +7,17 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F1E6),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black87),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ProfileSetting()),
-              );
-            },
-          )
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
           children: [
-            const Text(
-              "@mike34",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
             Row(
               children: [
                 const CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage('assets/images/user.jpg'), // عکس پروفایل
+                  backgroundImage: AssetImage(
+                    'assets/images/user.jpg',
+                  ), // عکس پروفایل
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -53,14 +34,11 @@ class Profile extends StatelessWidget {
                       const SizedBox(height: 8),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 16),
-            const Text(
-              "Mike",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            const Text("Mike", style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             const Text(
               "Hi, I'm Mike! I love reading books all day long, mainly fantasy and art books...",
