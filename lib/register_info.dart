@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'home.dart';
-import 'home_screen.dart';
 
 class RegisterInfo extends StatefulWidget {
   const RegisterInfo({super.key});
@@ -35,7 +34,7 @@ class _RegisterInfo extends State<RegisterInfo> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF5F1E6),
+        backgroundColor: const Color(0xfff2e9dc),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -48,7 +47,10 @@ class _RegisterInfo extends State<RegisterInfo> {
                     onPressed: () {
                       // Skip logic
                     },
-                    child: const Text("رد کردن", style: TextStyle(color: Colors.black)),
+                    child: const Text(
+                      "رد کردن",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -76,12 +78,16 @@ class _RegisterInfo extends State<RegisterInfo> {
                         border: Border.all(color: Colors.black26),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: _profileImage != null
-                          ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.file(_profileImage!, fit: BoxFit.cover),
-                      )
-                          : const Icon(Icons.camera_alt_outlined, size: 32),
+                      child:
+                          _profileImage != null
+                              ? ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.file(
+                                  _profileImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                              : const Icon(Icons.camera_alt_outlined, size: 32),
                     ),
                   ),
                 ),
@@ -127,13 +133,13 @@ class _RegisterInfo extends State<RegisterInfo> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("بعدی", style: TextStyle(fontSize: 16)),
+                        Text("بعدی", style: TextStyle(fontSize: 16, color: Colors.white)),
                         SizedBox(width: 8),
-                        Icon(Icons.arrow_back),
+                        Icon(Icons.arrow_back, color: Colors.white),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

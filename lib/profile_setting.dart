@@ -6,7 +6,7 @@ class ProfileSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F1E6),
+      backgroundColor: const Color(0xfff2e9dc),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

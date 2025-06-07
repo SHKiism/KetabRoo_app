@@ -26,7 +26,7 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xfff9f5ee),
+        backgroundColor: Color(0xfff2e9dc),
         title:
             pageIndex == 2
                 ? const Text(
@@ -63,7 +63,7 @@ class _Home extends State<Home> {
     return Container(
       height: 60,
       decoration: BoxDecoration(
-        color: Color(0xfff9f5ee),
+        color: Color(0xfff2e9dc),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),

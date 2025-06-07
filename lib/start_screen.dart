@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ketab_roo_app/login_screen.dart';
 import 'package:ketab_roo_app/signup_screen.dart';
-import 'home.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -11,7 +10,7 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F0E6),
+      backgroundColor: const Color(0xfff2e9dc),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
