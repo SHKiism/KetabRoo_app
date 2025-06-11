@@ -1,4 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:ketab_roo_app/book.dart';
+import 'package:ketab_roo_app/book_detail_screen.dart';
+import 'package:ketab_roo_app/search.dart' hide Book;
+import 'package:get/get.dart';
+
+final List<Book> books = [
+  Book(
+    title: 'یلوفیس',
+    author: 'ربکا کوانگ',
+    imageUrl: 'https://picsum.photos/200/300?random=1',
+    description: 'این کتاب داستان زندگی نویسنده‌ای است که...',
+  ),
+  Book(
+    title: 'جزیره‌ مرموز',
+    author: 'ژول ورن',
+    imageUrl: 'https://picsum.photos/200/300?random=2',
+    description: 'ماجراجویی گروهی در جزیره‌ای ناشناخته...',
+  ),
+  Book(
+    title: 'شازده کوچولو',
+    author: 'آنتوان دو سنت اگزوپری',
+    imageUrl: 'https://picsum.photos/200/300?random=3',
+    description: 'سفر شاعرانه و فلسفی شازده کوچولو در سیارات مختلف...',
+  ),
+  Book(
+    title: 'جنایت و مکافات',
+    author: 'داستایوفسکی',
+    imageUrl: 'https://picsum.photos/200/300?random=4',
+    description: 'روایت پیچیده‌ای از اخلاق، قتل و بخشش...',
+  ),
+  Book(
+    title: 'قلعه حیوانات',
+    author: 'جرج اورول',
+    imageUrl: 'https://picsum.photos/200/300?random=5',
+    description: 'تمثیلی سیاسی درباره جامعه و قدرت...',
+  ),
+  Book(
+    title: '1984',
+    author: 'جرج اورول',
+    imageUrl: 'https://picsum.photos/200/300?random=6',
+    description: 'رمانی درباره دنیای تاریک و دیکتاتوری کامل...',
+  ),
+];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +58,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Search Field
+                // جستجو
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -24,21 +67,28 @@ class HomeScreen extends StatelessWidget {
                       BoxShadow(color: Colors.black12, blurRadius: 4),
                     ],
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "جستجوی کتاب یا نویسنده...",
-                      prefixIcon: const Icon(Icons.search),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/search');
+                    },
+                    child: AbsorbPointer(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "جستجوی کتاب یا نویسنده...",
+                          prefixIcon: const Icon(Icons.search),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 28),
 
-                // Top 10 this week
+                // برترین‌ها
                 const Text(
                   "📚 ۱۰ کتاب برتر این هفته",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -48,15 +98,25 @@ class HomeScreen extends StatelessWidget {
                   height: 180,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10,
+                    itemCount: books.length,
                     separatorBuilder: (_, __) => const SizedBox(width: 12),
-                    itemBuilder:
-                        (context, index) => Column(
+                    itemBuilder: (context, index) {
+                      final book = books[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BookDetailScreen(book: book),
+                            ),
+                          );
+                        },
+                        child: Column(
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Image.network(
-                                "https://picsum.photos/100/150?random=$index",
+                                book.imageUrl,
                                 width: 100,
                                 height: 150,
                                 fit: BoxFit.cover,
@@ -76,11 +136,13 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 28),
 
-                // Book Categories
+                // موضوعات
                 const Text(
                   "📖 موضوعات کتاب",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -89,30 +151,23 @@ class HomeScreen extends StatelessWidget {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children:
-                      [
-                        "عاشقانه",
-                        "رازآلود",
-                        "پلیسی",
-                        "تخیلی",
-                        "اجتماعی",
-                        "طنز",
-                        "معنوی",
-                        "ترسناک",
-                      ].map((tag) {
-                        return Chip(
-                          label: Text(tag),
-                          backgroundColor: const Color(0xfffdfdfd),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          side: const BorderSide(color: Color(0xffdddddd)),
-                        );
-                      }).toList(),
+                  children: [
+                    "عاشقانه", "رازآلود", "پلیسی", "تخیلی",
+                    "اجتماعی", "طنز", "معنوی", "ترسناک",
+                  ].map((tag) {
+                    return Chip(
+                      label: Text(tag),
+                      backgroundColor: const Color(0xfffdfdfd),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: const BorderSide(color: Color(0xffdddddd)),
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 28),
 
-                // New books
+                // تازه‌ها
                 const Text(
                   "📕 تازه‌ها",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -121,20 +176,30 @@ class HomeScreen extends StatelessWidget {
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 6,
+                  itemCount: books.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     childAspectRatio: 2 / 3,
                   ),
-                  itemBuilder:
-                      (context, index) => ClipRRect(
+                  itemBuilder: (context, index) {
+                    final book = books[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BookDetailScreen(book: book),
+                          ),
+                        );
+                      },
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
                         child: Stack(
                           children: [
                             Image.network(
-                              "https://picsum.photos/200/300?random=${index + 30}",
+                              book.imageUrl,
                               fit: BoxFit.cover,
                               width: double.infinity,
                               height: double.infinity,
@@ -144,17 +209,16 @@ class HomeScreen extends StatelessWidget {
                               right: 0,
                               left: 0,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 6,
-                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 6),
                                 color: Colors.black.withOpacity(0.4),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    "کتاب جدید",
-                                    style: TextStyle(
+                                    book.title,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -162,6 +226,8 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 24),
               ],
