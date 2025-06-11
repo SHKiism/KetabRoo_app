@@ -46,6 +46,9 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   Widget build(BuildContext context) {
     final book = widget.book;
 
+    // 🔍 اضافه کردن لاگ برای دیباگ
+    print("📘 Book received: ${book.title}, ${book.author}, ${book.publisher}, ${book.translator}");
+
     return Scaffold(
       backgroundColor: const Color(0xfff9f4ec),
       appBar: AppBar(
@@ -106,12 +109,16 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.brown)),
                           const SizedBox(height: 6),
-                          Text(book.titleEnglish,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontStyle: FontStyle.italic,
-                                color: Colors.brown.shade400,
-                              )),
+                          Text(
+                            book.titleEnglish?.isNotEmpty == true
+                                ? book.titleEnglish!
+                                : 'عنوان انگلیسی موجود نیست',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.brown.shade400,
+                            ),
+                          ),
                           const SizedBox(height: 12),
                           Text('نویسنده: ${book.author}',
                               style: const TextStyle(
@@ -119,13 +126,13 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                                 color: Colors.brown,
                               )),
                           const SizedBox(height: 6),
-                          Text('مترجم: ${book.translator}',
+                          Text('مترجم: ${book.translator?.isNotEmpty == true ? book.translator! : "نامشخص"}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.brown,
                               )),
                           const SizedBox(height: 6),
-                          Text('ناشر: ${book.publisher}',
+                          Text('ناشر: ${book.publisher?.isNotEmpty == true ? book.publisher! : "نامشخص"}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.brown,

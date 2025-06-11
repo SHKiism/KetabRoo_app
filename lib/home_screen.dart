@@ -3,48 +3,25 @@ import 'package:ketab_roo_app/book.dart';
 import 'package:ketab_roo_app/book_detail_screen.dart';
 import 'package:ketab_roo_app/search.dart' hide Book;
 import 'package:get/get.dart';
+import 'package:ketab_roo_app/api_service.dart';
 
-final List<Book> books = [
-  Book(
-    title: 'یلوفیس',
-    author: 'ربکا کوانگ',
-    imageUrl: 'https://picsum.photos/200/300?random=1',
-    description: 'این کتاب داستان زندگی نویسنده‌ای است که...',
-  ),
-  Book(
-    title: 'جزیره‌ مرموز',
-    author: 'ژول ورن',
-    imageUrl: 'https://picsum.photos/200/300?random=2',
-    description: 'ماجراجویی گروهی در جزیره‌ای ناشناخته...',
-  ),
-  Book(
-    title: 'شازده کوچولو',
-    author: 'آنتوان دو سنت اگزوپری',
-    imageUrl: 'https://picsum.photos/200/300?random=3',
-    description: 'سفر شاعرانه و فلسفی شازده کوچولو در سیارات مختلف...',
-  ),
-  Book(
-    title: 'جنایت و مکافات',
-    author: 'داستایوفسکی',
-    imageUrl: 'https://picsum.photos/200/300?random=4',
-    description: 'روایت پیچیده‌ای از اخلاق، قتل و بخشش...',
-  ),
-  Book(
-    title: 'قلعه حیوانات',
-    author: 'جرج اورول',
-    imageUrl: 'https://picsum.photos/200/300?random=5',
-    description: 'تمثیلی سیاسی درباره جامعه و قدرت...',
-  ),
-  Book(
-    title: '1984',
-    author: 'جرج اورول',
-    imageUrl: 'https://picsum.photos/200/300?random=6',
-    description: 'رمانی درباره دنیای تاریک و دیکتاتوری کامل...',
-  ),
-];
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<Book>> _topBooksFuture;
+  late Future<List<Book>> _newBooksFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _topBooksFuture = ApiService.fetchTop10Books();
+    _newBooksFuture = ApiService.fetchNewBooks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +35,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // جستجو
+                // نوار جستجو
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -88,61 +65,68 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 28),
 
-                // برترین‌ها
+                // لیست کتاب‌های برتر
                 const Text(
                   "📚 ۱۰ کتاب برتر این هفته",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 const SizedBox(height: 12),
-                SizedBox(
-                  height: 180,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: books.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) {
-                      final book = books[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BookDetailScreen(book: book),
+                FutureBuilder<List<Book>>(
+                  future: _topBooksFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Text('خطا در دریافت داده‌ها');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('کتابی پیدا نشد.');
+                    }
+
+                    final books = snapshot.data!;
+                    return SizedBox(
+                      height: 180,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: books.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 12),
+                        itemBuilder: (context, index) {
+                          final book = books[index];
+                          return GestureDetector(
+                            onTap: () => Get.to(() => BookDetailScreen(book: book)),
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    book.imageUrl,
+                                    width: 100,
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                CircleAvatar(
+                                  radius: 12,
+                                  backgroundColor: Colors.brown,
+                                  child: Text(
+                                    "${index + 1}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                book.imageUrl,
-                                width: 100,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            CircleAvatar(
-                              radius: 12,
-                              backgroundColor: Colors.brown,
-                              child: Text(
-                                "${index + 1}",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 28),
 
-                // موضوعات
+                // موضوعات کتاب
                 const Text(
                   "📖 موضوعات کتاب",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -173,59 +157,66 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 const SizedBox(height: 12),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: books.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 2 / 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BookDetailScreen(book: book),
+                FutureBuilder<List<Book>>(
+                  future: _newBooksFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Text('خطا در دریافت داده‌ها');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('کتابی پیدا نشد.');
+                    }
+
+                    final books = snapshot.data!;
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: books.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 2 / 3,
+                      ),
+                      itemBuilder: (context, index) {
+                        final book = books[index];
+                        return GestureDetector(
+                          onTap: () => Get.to(() => BookDetailScreen(book: book)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Stack(
+                              children: [
+                                Image.network(
+                                  book.imageUrl,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 6),
+                                    color: Colors.black.withOpacity(0.4),
+                                    child: Center(
+                                      child: Text(
+                                        book.title,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Stack(
-                          children: [
-                            Image.network(
-                              book.imageUrl,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              left: 0,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 6),
-                                color: Colors.black.withOpacity(0.4),
-                                child: Center(
-                                  child: Text(
-                                    book.title,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     );
                   },
                 ),

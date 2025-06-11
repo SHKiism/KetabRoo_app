@@ -1,19 +1,34 @@
 class Book {
+  final int id;
   final String title;
-  final String titleEnglish;
   final String author;
-  final String translator;
-  final String publisher;
   final String imageUrl;
   final String description;
+  final String? publisher;        // ناشر
+  final String? translator;       // مترجم
+  final String? titleEnglish;     // عنوان انگلیسی
 
   Book({
+    required this.id,
     required this.title,
     required this.author,
     required this.imageUrl,
     required this.description,
-    this.titleEnglish = '',
-    this.translator = '',
-    this.publisher = '',
+    this.publisher,
+    this.translator,
+    this.titleEnglish,
   });
+
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
+      id: json['id'],
+      title: json['fa_name'] ?? '',
+      author: json['author'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      description: json['description'] ?? '',
+      publisher: json['publisher'],
+      translator: json['translator'],
+      titleEnglish: json['eng_name'],
+    );
+  }
 }
