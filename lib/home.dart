@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ketab_roo_app/api_service.dart';
 import 'package:ketab_roo_app/profile.dart';
 import 'package:ketab_roo_app/profile_setting.dart';
 import 'package:ketab_roo_app/search.dart';
 
+import 'book.dart';
 import 'home_screen.dart';
 
 class Home extends StatefulWidget {
@@ -15,15 +17,32 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   int pageIndex = 0;
+  List<Book> allBooks = [];
 
-  final List<Widget> pages = [
-    const HomeScreen(),
-    const Search(),
-    const Profile(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadBooks();
+  }
+
+  Future<void> _loadBooks() async {
+    try {
+      final books = await ApiService.fetchAllBooks();
+      setState(() {
+        allBooks = books;
+      });
+    } catch (e) {
+      print("خطا در بارگذاری کتاب‌ها: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      const HomeScreen(),
+      Search(allBooks: allBooks), // Pass books to Search
+      const Profile(),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xfff2e9dc),

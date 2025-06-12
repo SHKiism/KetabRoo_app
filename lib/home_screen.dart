@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ketab_roo_app/book.dart';
 import 'package:ketab_roo_app/book_detail_screen.dart';
-import 'package:ketab_roo_app/search.dart' hide Book;
 import 'package:get/get.dart';
 import 'package:ketab_roo_app/api_service.dart';
 
@@ -35,36 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // نوار جستجو
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 4),
-                    ],
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.toNamed('/search');
-                    },
-                    child: AbsorbPointer(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "جستجوی کتاب یا نویسنده...",
-                          prefixIcon: const Icon(Icons.search),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 28),
-
                 // لیست کتاب‌های برتر
                 const Text(
                   "📚 ۱۰ کتاب برتر این هفته",
@@ -92,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final book = books[index];
                           return GestureDetector(
-                            onTap: () => Get.to(() => BookDetailScreen(book: book)),
+                            onTap:
+                                () =>
+                                    Get.to(() => BookDetailScreen(book: book)),
                             child: Column(
                               children: [
                                 ClipRRect(
@@ -135,19 +106,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: [
-                    "عاشقانه", "رازآلود", "پلیسی", "تخیلی",
-                    "اجتماعی", "طنز", "معنوی", "ترسناک",
-                  ].map((tag) {
-                    return Chip(
-                      label: Text(tag),
-                      backgroundColor: const Color(0xfffdfdfd),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      side: const BorderSide(color: Color(0xffdddddd)),
-                    );
-                  }).toList(),
+                  children:
+                      [
+                        "عاشقانه",
+                        "رازآلود",
+                        "پلیسی",
+                        "تخیلی",
+                        "اجتماعی",
+                        "طنز",
+                        "معنوی",
+                        "ترسناک",
+                      ].map((tag) {
+                        return Chip(
+                          label: Text(tag),
+                          backgroundColor: const Color(0xfffdfdfd),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          side: const BorderSide(color: Color(0xffdddddd)),
+                        );
+                      }).toList(),
                 ),
                 const SizedBox(height: 28),
 
@@ -167,22 +145,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Text('کتابی پیدا نشد.');
                     }
-
                     final books = snapshot.data!;
                     return GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: books.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 2 / 3,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 2 / 3,
+                          ),
                       itemBuilder: (context, index) {
                         final book = books[index];
                         return GestureDetector(
-                          onTap: () => Get.to(() => BookDetailScreen(book: book)),
+                          onTap:
+                              () => Get.to(() => BookDetailScreen(book: book)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(16),
                             child: Stack(
@@ -198,7 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   right: 0,
                                   left: 0,
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                    ),
                                     color: Colors.black.withOpacity(0.4),
                                     child: Center(
                                       child: Text(

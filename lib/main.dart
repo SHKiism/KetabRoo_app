@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => const Profile()),
         GetPage(name: '/profile_setting', page: () => const ProfileSetting()),
-        GetPage(name: '/search', page: () => const Search()),
+        GetPage(name: '/search', page: () => Search(allBooks: Get.arguments)),
         GetPage(name: '/book_detail', page: () => BookDetailScreen(book: Get.arguments)),
       ],
     );

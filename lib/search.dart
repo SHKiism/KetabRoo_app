@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'book.dart';
+import 'book_detail_screen.dart';
 
 class Search extends StatefulWidget {
-  const Search({super.key});
+  final List<Book> allBooks;
+
+  const Search({super.key, required this.allBooks});
 
   @override
   _Search createState() => _Search();
@@ -12,30 +18,10 @@ class _Search extends State<Search> {
   String query = '';
   bool showResults = false;
 
-  List<Book> allBooks = [
-    Book("سمفونی مردگان", "عباس معروفی", 5, "assets/symphony_of_dead.jpg"),
-    Book("چشمهایش", "بزرگ علوی", 4, "assets/his_eyes.jpg"),
-    Book("بوف کور", "صادق هدایت", 4, "assets/the_blind_owl.jpg"),
-    Book("روی ماه خداوند را ببوس", "مصطفی مستور", 4, "assets/kiss_god.jpg"),
-    Book("زوال کلنل", "محمود دولت‌آبادی", 3, "assets/colonel.jpg"),
-    Book("دا", "زهرا حسینی", 5, "assets/da.jpg"),
-    Book("من او", "رضا امیرخانی", 5, "assets/man_o.jpg"),
-    Book("کلیدر", "محمود دولت‌آبادی", 5, "assets/kelidar.jpg"),
-  ];
-
-  List<String> recentSearches = [
-    "اطلس پارادوکس",
-    "وایکینگ‌ها",
-    "آواز ماه",
-    "سمفونی مردگان",
-    "روی ماه خداوند را ببوس",
-    "من او",
-  ];
-
   @override
   Widget build(BuildContext context) {
     final List<Book> suggestions =
-        allBooks
+        widget.allBooks
             .where(
               (book) =>
                   book.title.toLowerCase().startsWith(query.toLowerCase()) &&
@@ -44,7 +30,7 @@ class _Search extends State<Search> {
             .toList();
 
     final List<Book> results =
-        allBooks
+        widget.allBooks
             .where(
               (book) => book.title.toLowerCase().contains(query.toLowerCase()),
             )
@@ -117,95 +103,31 @@ class _Search extends State<Search> {
                           separatorBuilder: (_, __) => Divider(),
                           itemBuilder: (context, index) {
                             final book = results[index];
-                            return ListTile(
-                              leading: Image.asset(
-                                book.image,
-                                width: 50,
-                                height: 70,
-                                fit: BoxFit.cover,
-                              ),
-                              title: Text(book.title),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(book.author),
-                                  Row(
-                                    children: List.generate(
-                                      5,
-                                      (i) => Icon(
-                                        i < book.rating
-                                            ? Icons.star
-                                            : Icons.star_border,
-                                        size: 16,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                            return GestureDetector(
+                              onTap:
+                                  () => Get.to(
+                                    () => BookDetailScreen(book: book),
                                   ),
-                                ],
+                              child: ListTile(
+                                leading: Image.network(
+                                  book.imageUrl,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 120,
+                                ),
+                                title: Text(book.title),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [Text(book.author)],
+                                ),
                               ),
                             );
                           },
                         ),
-              ),
-            // Recent Searches
-            if (!showResults && query.isEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "جستجو های اخیر",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 150,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children:
-                          recentSearches.map((title) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 12),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'assets/${title.toLowerCase().replaceAll(' ', '_')}.jpg',
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    title,
-                                    style: TextStyle(fontSize: 12),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                    ),
-                  ),
-                ],
               ),
           ],
         ),
       ),
     );
   }
-}
-
-class Book {
-  final String title;
-  final String author;
-  final int rating;
-  final String image;
-
-  Book(this.title, this.author, this.rating, this.image);
 }
