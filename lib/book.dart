@@ -20,6 +20,7 @@ class Book {
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {
+    // print(json); // if you want to see the api result, just uncomment it.
     return Book(
       id: json['id'],
       title: json['fa_name'] ?? '',

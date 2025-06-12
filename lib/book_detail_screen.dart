@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ketab_roo_app/book.dart';
+import 'api_service.dart';
 
 class BookDetailScreen extends StatefulWidget {
   final Book book;
@@ -12,11 +13,19 @@ class BookDetailScreen extends StatefulWidget {
 class _BookDetailScreenState extends State<BookDetailScreen> {
   int rating = 0;
   final commentController = TextEditingController();
+  late Future<Book> _bookDetails;
+
   final List<String> comments = [
     "عالی بود، پیشنهاد می‌کنم!",
     "مطالعه این کتاب خیلی برایم مفید بود.",
     "ترجمه بسیار روان و دلنشین.",
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _bookDetails = ApiService.fetchBookById(widget.book.id);
+  }
 
   void addComment() {
     final text = commentController.text.trim();
@@ -44,17 +53,40 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final book = widget.book;
+    return FutureBuilder<Book>(
+      future: _bookDetails,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (snapshot.hasError) {
+          return const Scaffold(
+            body: Center(child: Text('خطا در دریافت اطلاعات کتاب')),
+          );
+        } else if (!snapshot.hasData) {
+          return const Scaffold(body: Center(child: Text('کتابی یافت نشد')));
+        } else {
+          return _buildBookDetailUI(snapshot.data!);
+        }
+      },
+    );
+  }
 
-    // 🔍 اضافه کردن لاگ برای دیباگ
-    print("📘 Book received: ${book.title}, ${book.author}, ${book.publisher}, ${book.translator}");
+  Widget _buildBookDetailUI(Book book) {
+    print(
+      "📘 Book received: ${book.title}, ${book.author}, ${book.publisher}, ${book.translator}",
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xfff9f4ec),
       appBar: AppBar(
         backgroundColor: Colors.brown.shade700,
         elevation: 0,
-        title: Text(book.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          book.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -83,7 +115,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       color: Colors.brown.withOpacity(0.2),
                       blurRadius: 12,
                       offset: const Offset(0, 6),
-                    )
+                    ),
                   ],
                 ),
                 padding: const EdgeInsets.all(18),
@@ -103,11 +135,14 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(book.title,
-                              style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.brown)),
+                          Text(
+                            book.title,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.brown,
+                            ),
+                          ),
                           const SizedBox(height: 6),
                           Text(
                             book.titleEnglish?.isNotEmpty == true
@@ -120,23 +155,29 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          Text('نویسنده: ${book.author}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.brown,
-                              )),
+                          Text(
+                            'نویسنده: ${book.author}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.brown,
+                            ),
+                          ),
                           const SizedBox(height: 6),
-                          Text('مترجم: ${book.translator?.isNotEmpty == true ? book.translator! : "نامشخص"}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.brown,
-                              )),
+                          Text(
+                            'مترجم: ${book.translator?.isNotEmpty == true ? book.translator! : "نامشخص"}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.brown,
+                            ),
+                          ),
                           const SizedBox(height: 6),
-                          Text('ناشر: ${book.publisher?.isNotEmpty == true ? book.publisher! : "نامشخص"}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.brown,
-                              )),
+                          Text(
+                            'ناشر: ${book.publisher?.isNotEmpty == true ? book.publisher! : "نامشخص"}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.brown,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -146,23 +187,34 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
               const SizedBox(height: 30),
 
               // توضیحات کتاب
-              const Text('درباره کتاب',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown)),
+              const Text(
+                'درباره کتاب',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
               const SizedBox(height: 12),
-              Text(book.description,
-                  style: const TextStyle(
-                      fontSize: 16, height: 1.5, color: Colors.black87)),
+              Text(
+                book.description,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.5,
+                  color: Colors.black87,
+                ),
+              ),
               const SizedBox(height: 30),
 
               // امتیازدهی
-              const Text('امتیاز شما',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown)),
+              const Text(
+                'امتیاز شما',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -172,16 +224,22 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
               const SizedBox(height: 30),
 
               // نظرات
-              const Text('نظرات کاربران',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown)),
+              const Text(
+                'نظرات کاربران',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
               const SizedBox(height: 12),
 
               Container(
                 constraints: const BoxConstraints(maxHeight: 200),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.brown.shade50,
                   borderRadius: BorderRadius.circular(15),
@@ -190,14 +248,16 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: comments.length,
-                    separatorBuilder: (_, __) => const Divider(
-                      color: Colors.brown,
-                      height: 12,
-                    ),
+                    separatorBuilder:
+                        (_, __) =>
+                            const Divider(color: Colors.brown, height: 12),
                     itemBuilder: (context, index) {
                       return Text(
                         comments[index],
-                        style: const TextStyle(fontSize: 16, color: Colors.black87),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
                       );
                     },
                   ),
@@ -226,12 +286,18 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   onPressed: addComment,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.brown.shade700,
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 50,
+                      vertical: 14,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: const Text('ارسال نظر', style: TextStyle(fontSize: 18)),
+                  child: const Text(
+                    'ارسال نظر',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
               const SizedBox(height: 50),
